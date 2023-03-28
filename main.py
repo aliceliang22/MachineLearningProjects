@@ -1,4 +1,5 @@
 import numpy as np
+from sklearn.linear_model import LinearRegression
 # Linear regression find the best values of a and to minimize the square of errors
 # (the difference between measured y and value calculated by the following linear equation):
 #
@@ -76,6 +77,17 @@ def get_regression_data_in_numpy_array():
          32.10, 65.65, 99.21, 50.84, 24.96, 14.05, 80.69, 125.52, 52.30, 17.36, 55.62, 88.69, 52.65, 42.82, 84.60, 67.18])
     return (x, y)
 
+# Returns linear equation coeffients a and b by sklearn for numpy array x and y
+def get_linear_regression_using_sklearn(x, y):
+
+    nx = len(x)
+    x = x.reshape(nx, 1)
+    reg = LinearRegression().fit(x, y)
+    a = reg.intercept_
+    b = reg.coef_[0]
+
+    return (a, b)
+
 # Test linear regression implementation using different methods
 def test_regression_in_python():
     # Test linear regression implementation using list
@@ -87,6 +99,10 @@ def test_regression_in_python():
     x_array, y_array = get_regression_data_in_numpy_array()
     a, b = get_linear_regression_with_numpy_array(x_array, y_array)
     print("From Numpy:\t a = " + str(a) + "\t b = " + str(b))
+
+    # Write code to get the values of a and b for linear regression
+    a, b = get_linear_regression_using_sklearn(x_array, y_array)
+    print("From SKLearn:\t a = " + str(a) + "\t b = " + str(b))
 
 def main():
     test_regression_in_python()
